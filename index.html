@@ -28,7 +28,7 @@
                 <div class="d-flex justify-content-end mb-2">
                     <button type="button" class="btn btn-primary me-2" id="save-data-btn">Save Data</button>
                     <button type="button" class="btn btn-primary me-2" id="add-order-btn">Add Order</button>
-                    <input type="text" class="form-control w-auto" placeholder="Search Orders">
+                    <input type="text" class="form-control w-auto" placeholder="Search Orders" id="search-orders">
                 </div>
                 <div id="status" class="d-flex justify-content-end mb-2">
 
@@ -115,7 +115,26 @@
             
             $("tr").eq(1).before("<tr><td><input type='text' id='order-id' /></td><td><input type='text' id='order-value' /></td><td><input type='text' id='order-qty' /></td><td><button class='btn btn-sm btn-success' id='save-order-btn'>Save New Order</button></td></tr>");        
         });
+        $("#search-orders").on('input',function(){
+            //console.log("Value Searching for: " + $(this).val())
 
+            var searchId = $(this).val();
+
+            var rows = $("tbody tr");
+            rows.each(function(){
+
+                var orderId = $(this).find("td").eq(0).html();
+                if(orderId.startsWith(searchId))
+                {
+                    $(this).show();
+                }
+                else
+                {
+                    $(this).hide();
+                }
+
+            });
+        });
         $("#orderValueSlider").on('input',function(){
             var value = $(this).val();
 
