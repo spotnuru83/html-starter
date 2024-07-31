@@ -49,8 +49,8 @@
                             <td>$200</td>
                             <td>5</td>
                             <td>
-                                <button class="btn btn-sm btn-primary">Edit</button>
-                                <button class="btn btn-sm btn-danger">Delete</button>
+                                <button class="btn btn-sm btn-primary edit">Edit</button>
+                                <button class="btn btn-sm btn-danger delete">Delete</button>
                             </td>
                         </tr>
                         <tr>
@@ -58,8 +58,8 @@
                             <td>$350</td>
                             <td>2</td>
                             <td>
-                                <button class="btn btn-sm btn-primary">Edit</button>
-                                <button class="btn btn-sm btn-danger">Delete</button>
+                                <button class="btn btn-sm btn-primary edit">Edit</button>
+                                <button class="btn btn-sm btn-danger delete">Delete</button>
                             </td>
                         </tr>
                         <tr>
@@ -67,8 +67,8 @@
                             <td>$1250</td>
                             <td>10</td>
                             <td>
-                                <button class="btn btn-sm btn-primary">Edit</button>
-                                <button class="btn btn-sm btn-danger">Delete</button>
+                                <button class="btn btn-sm btn-primary edit">Edit</button>
+                                <button class="btn btn-sm btn-danger delete">Delete</button>
                             </td>
                         </tr>
                     </tbody>
@@ -161,9 +161,35 @@
             tdOrderId.parent().text(orderId);
             tdOrderValue.parent().text("$"+orderValue);
             tdOrderQty.parent().text(orderQty);
-            tdActions.html("<button class='btn btn-sm btn-primary'>Edit</button><button class='btn btn-sm btn-danger'>Delete</button>");
+            tdActions.html("<button class='btn btn-sm btn-primary edit'>Edit</button><button class='btn btn-sm btn-danger delete'>Delete</button>");
         }
            
     });      
+
+    $(document).on('click', '.edit', function() {
+        //console.log($(this).parent().parent().html())
+        var tr = $(this).parent().parent();
+
+        var orderId = tr.find("td").eq(0).html();
+        var orderValue = tr.find("td").eq(1).html();
+        var orderQty = tr.find("td").eq(2).html();
+
+        orderValue = orderValue.replace("$","");
+
+        console.log("ID: " + orderId + ", Value: " + orderValue + ", Quantity: " + orderQty  );
+
+        //tr.remove();
+        tr.html("<td><input type='text' value='"+orderId+"' id='order-id' /></td>"+
+                "<td><input type='text' value='"+orderValue+"' id='order-value' /></td>"+
+                "<td><input type='text' value='"+orderQty+"' id='order-qty' /></td>"+
+                "<td><button class='btn btn-sm btn-success' id='save-order-btn'>Save</button></td>"
+                );
+        
+    });
+
+    $(document).on('click', '.delete', function() {
+        $(this).parent().parent().remove();
+        
+    });    
 </script>
 </html>
