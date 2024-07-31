@@ -81,7 +81,7 @@
         $("p").text( "Value selected: " + $("#orderValueSlider").val());
         $("#add-order-btn").click(function(){
             
-            $("tr").eq(1).before("<tr><td><input type='text' id='order-id' /></td><td><input type='text' id='order-value' /></td><td><input type='text' id='order-qty' /></td><td><button class='btn btn-sm btn-success' id='save-order-btn'>Save</button></td></tr>");        
+            $("tr").eq(1).before("<tr><td><input type='text' id='order-id' /></td><td><input type='text' id='order-value' /></td><td><input type='text' id='order-qty' /></td><td><button class='btn btn-sm btn-success' id='save-order-btn'>Save New Order</button></td></tr>");        
         });
 
         $("#orderValueSlider").on('input',function(){
@@ -89,10 +89,13 @@
 
             
             var rows = $("tbody tr");
+            console.log("Number of rows: " + rows.length);
             $("p").text( "Selected value: " + value );
 
             rows.each(function(){
                 var orderValue = $(this).find("td").eq(1).html().replace("$","");
+                orderValue = +orderValue;
+                console.log("Order Value : " + orderValue + " Filtered value:" + value );
                 if(orderValue<value)
                 {
                     $(this).hide();
@@ -102,11 +105,7 @@
                     $(this).show();
                 }
                 
-            })
-
-            
-            
-            
+            })            
         });
       });
       $(document).on('click', '#save-order-btn', function() {
