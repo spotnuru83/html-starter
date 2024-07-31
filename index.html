@@ -17,7 +17,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Filter Orders</h5>
                         <label for="orderValueSlider" class="form-label">Order Value</label>
-                        <input type="range" class="form-range" id="orderValueSlider" min="0" max="10000" step="100">
+                        <input type="range" class="form-range" id="orderValueSlider" min="0" max="2000" step="100">
                         <p></p>
                     </div>
                 </div>
@@ -78,10 +78,35 @@
 <script>
     $(function() {
         //var $j = jQuery.noConflict();
-        $( "p" ).text( "Control the slider to filter orders more than the value of slider." );
+        $("p").text( "Value selected: " + $("#orderValueSlider").val());
         $("#add-order-btn").click(function(){
-            $("p").text( "Add order is clicked");
+            
             $("tr").eq(1).before("<tr><td><input type='text' id='order-id' /></td><td><input type='text' id='order-value' /></td><td><input type='text' id='order-qty' /></td><td><button class='btn btn-sm btn-success' id='save-order-btn'>Save</button></td></tr>");        
+        });
+
+        $("#orderValueSlider").on('input',function(){
+            var value = $(this).val();
+
+            
+            var rows = $("tbody tr");
+            $("p").text( "Selected value: " + value );
+
+            rows.each(function(){
+                var orderValue = $(this).find("td").eq(1).html().replace("$","");
+                if(orderValue<value)
+                {
+                    $(this).hide();
+                }
+                else
+                {
+                    $(this).show();
+                }
+                
+            })
+
+            
+            
+            
         });
       });
       $(document).on('click', '#save-order-btn', function() {
