@@ -26,8 +26,12 @@
             <div class="col-md-8">
                 <!-- Buttons and Search Box -->
                 <div class="d-flex justify-content-end mb-2">
+                    <button type="button" class="btn btn-primary me-2" id="save-data-btn">Save Data</button>
                     <button type="button" class="btn btn-primary me-2" id="add-order-btn">Add Order</button>
                     <input type="text" class="form-control w-auto" placeholder="Search Orders">
+                </div>
+                <div id="status" class="d-flex justify-content-end mb-2">
+
                 </div>
                 <!-- Table -->
                 <table class="table">
@@ -79,6 +83,34 @@
     $(function() {
         //var $j = jQuery.noConflict();
         $("p").text( "Value selected: " + $("#orderValueSlider").val());
+
+        $("#save-data-btn").click(function(){
+            var rows = $("tbody tr");
+            var data = []
+            rows.each(function(){
+                var row = $(this);
+                var orderId = row.find("td").eq(0);
+                var orderValue = row.find("td").eq(1);
+                var orderQty = row.find("td").eq(2);
+                /*
+                console.log("Order ID: " + orderId.html());
+                console.log("Order Value: " + orderValue.html());
+                console.log("Order Qty: " + orderQty.html());
+                */
+                var dataObj = {
+                    "OrderID":orderId.html(),
+                    "OrderValue":orderValue.html(),
+                    "OrderQty":orderQty.html()
+                }
+
+                data.push(dataObj);
+
+            })
+            //console.log(data);
+            localStorage.setItem('OrdersData',data);
+            $("#status").html("All the data is stored to local Storage.");
+        });
+
         $("#add-order-btn").click(function(){
             
             $("tr").eq(1).before("<tr><td><input type='text' id='order-id' /></td><td><input type='text' id='order-value' /></td><td><input type='text' id='order-qty' /></td><td><button class='btn btn-sm btn-success' id='save-order-btn'>Save New Order</button></td></tr>");        
